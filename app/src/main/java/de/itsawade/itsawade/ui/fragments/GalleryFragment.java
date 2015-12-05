@@ -4,6 +4,7 @@ package de.itsawade.itsawade.ui.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,14 +17,13 @@ import android.widget.TextView;
 import java.util.List;
 
 import de.itsawade.itsawade.R;
+import de.itsawade.itsawade.async.ImagesLoader;
+import de.itsawade.itsawade.model.BlogPost;
 import de.itsawade.itsawade.model.Gallerys;
+import de.itsawade.itsawade.model.ImageList;
 import de.itsawade.itsawade.model.Images;
-import de.itsawade.itsawade.net.JsonService;
 import de.itsawade.itsawade.ui.adapter.ImagesAdapter;
-import retrofit.Callback;
-import retrofit.GsonConverterFactory;
-import retrofit.Response;
-import retrofit.Retrofit;
+import de.itsawade.itsawade.util.OnItemClickListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,6 +32,9 @@ public class GalleryFragment extends Fragment implements LoaderManager.LoaderCal
 
     private static Gallerys gallerys;
     private RecyclerView recyclerView;
+    private List<Images> imagesList;
+    ImageList list;
+    private static final int PHOTO_DOWNLOADER = 0;
 
     public GalleryFragment() {
         // Required empty public constructor
@@ -75,13 +78,32 @@ public class GalleryFragment extends Fragment implements LoaderManager.LoaderCal
 
     @Override
     public Loader<List<Images>> onCreateLoader(int id, Bundle args) {
-        return null;
+        final FragmentActivity ctx = getActivity();
+        return new ImagesLoader(ctx, gallerys.getId());
     }
 
     @Override
     public void onLoadFinished(Loader<List<Images>> loader, List<Images> data) {
         if (data != null) {
-            recyclerView.setAdapter(new ImagesAdapter(data));
+            imagesList = data;
+            list = new ImageList(imagesList);
+            ImagesAdapter imagesAdapter = new ImagesAdapter(data, new OnItemClickListener<String>() {
+                @Override
+                public void onItemClick(Gallerys item, int position) {
+
+                }
+
+                @Override
+                public void onItemClick(BlogPost item, int position) {
+
+                }
+
+                @Override
+                public void onItemClick(Images item, int position) {
+                        load(item, position);
+                }
+            });
+            recyclerView.setAdapter(imagesAdapter);
         }
     }
 
@@ -92,27 +114,17 @@ public class GalleryFragment extends Fragment implements LoaderManager.LoaderCal
 
     public void onLoad() {
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://it-sawade.de")
-                        //.baseUrl("http://jsonplaceholder.typicode.com")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        final FragmentActivity c = getActivity();
+        c.getSupportLoaderManager().restartLoader(PHOTO_DOWNLOADER,null,this);
 
-        JsonService jsonService = retrofit.create(JsonService.class);
+    }
 
-        jsonService.getImages(gallerys.getId()).enqueue(new Callback<List<Images>>() {
-            @Override
-            public void onResponse(Response<List<Images>> response, Retrofit retrofit) {
-                if(response.isSuccess()) {
-                    List a = response.body().subList(0,response.body().size());
-                    recyclerView.setAdapter(new ImagesAdapter(response.body()));
-                }
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-
-            }
-        });
+    private void load(Images images, int pos) {
+        final FragmentActivity c = getActivity();
+        FragmentTransaction transaction = c.getSupportFragmentManager().beginTransaction();
+        ImageDetailFragment imageDetailFragment = ImageDetailFragment.newInstance(list,pos);
+        transaction.replace(R.id.activityContainer,imageDetailFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

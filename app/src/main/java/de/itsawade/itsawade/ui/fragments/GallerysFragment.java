@@ -25,6 +25,7 @@ import de.itsawade.itsawade.R;
 import de.itsawade.itsawade.async.StringLoader;
 import de.itsawade.itsawade.model.Gallerys;
 import de.itsawade.itsawade.model.BlogPost;
+import de.itsawade.itsawade.model.Images;
 import de.itsawade.itsawade.ui.adapter.GallerysAdapter;
 import de.itsawade.itsawade.util.GallerysDeserializer;
 import de.itsawade.itsawade.util.OnItemClickListener;
@@ -98,6 +99,11 @@ public class GallerysFragment extends Fragment implements LoaderManager.LoaderCa
 
                 @Override
                 public void onItemClick(BlogPost item, int position) {
+
+                }
+
+                @Override
+                public void onItemClick(Images item, int position) {
 
                 }
             });

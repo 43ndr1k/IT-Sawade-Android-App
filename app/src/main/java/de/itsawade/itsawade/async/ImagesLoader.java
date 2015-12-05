@@ -30,7 +30,7 @@ public class ImagesLoader extends AsyncTaskLoader<List<Images>> {
     public List<Images> loadInBackground() {
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://it-sawade.de/api/images/gallery/" + id)
+                .baseUrl("http://it-sawade.de")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

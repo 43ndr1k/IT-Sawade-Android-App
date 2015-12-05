@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -13,6 +12,7 @@ import java.util.List;
 
 import de.itsawade.itsawade.R;
 import de.itsawade.itsawade.model.Images;
+import de.itsawade.itsawade.util.OnItemClickListener;
 
 
 /**
@@ -21,10 +21,11 @@ import de.itsawade.itsawade.model.Images;
 public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder> {
 
     private final List<Images> images;
+    private OnItemClickListener<String> onItemClickListener;
 
-
-    public ImagesAdapter(List<Images> images) {
+    public ImagesAdapter(List<Images> images, OnItemClickListener<String> onItemClickListener) {
         this.images = images;
+        this.onItemClickListener = onItemClickListener;
     }
 
     @Override
@@ -35,14 +36,22 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-       Images image = images.get(position);
-
-        holder.description.setText(image.getDescription());
+    public void onBindViewHolder(ViewHolder holder, final int position) {
+       final Images image = images.get(position);
 
         Picasso.with(holder.itemView.getContext())
                 .load(image.getThumbnailUrl())
+                .resize(1350,1000)
                 .into(holder.image);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onItemClickListener != null) {
+                    onItemClickListener.onItemClick(image, position);
+                }
+            }
+        });
     }
 
     @Override
@@ -52,13 +61,11 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView description;
         public ImageView image;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            description = (TextView)itemView.findViewById(R.id.description);
-            image = (ImageView)itemView.findViewById(R.id.image);
+            image = (ImageView)itemView.findViewById(R.id.imageView);
         }
     }
 
