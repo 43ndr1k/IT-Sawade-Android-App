@@ -23,6 +23,7 @@ public class GallerysDeserializer implements JsonDeserializer<Gallerys> {
         JsonObject jsonObject = json.getAsJsonObject();
         gallerys.setId(jsonObject.get("id").getAsInt());
         gallerys.setContent(jsonObject.get("content").getAsString().replace("<p>", "").replace("</p>",""));
+        gallerys.setContent(jsonObject.get("content").getAsString().replace("<h1>", "").replace("</h1>",""));
         gallerys.setTitle(jsonObject.get("title").getAsString());
 
 

@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.List;
 
 import de.itsawade.itsawade.model.Images;
-import de.itsawade.itsawade.net.JsonService;
+import de.itsawade.itsawade.net.PlaceholderService;
 import retrofit.GsonConverterFactory;
 import retrofit.Response;
 import retrofit.Retrofit;
@@ -34,10 +34,10 @@ public class ImagesLoader extends AsyncTaskLoader<List<Images>> {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        JsonService jsonService = retrofit.create(JsonService.class);
+        PlaceholderService placeholderService = retrofit.create(PlaceholderService.class);
 
         try {
-            Response<List<Images>> response = jsonService.getImages(id).execute();
+            Response<List<Images>> response = placeholderService.getImages(id).execute();
             if(response.isSuccess()) {
                 return response.body();
             }
