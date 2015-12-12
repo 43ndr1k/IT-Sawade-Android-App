@@ -1,10 +1,10 @@
 package de.itsawade.itsawade.ui.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,12 +17,15 @@ import android.widget.TextView;
 import java.util.List;
 
 import de.itsawade.itsawade.R;
-import de.itsawade.itsawade.async.ImagesLoader;
+import de.itsawade.itsawade.async.GenericLoader;
+import de.itsawade.itsawade.logic.PlaceholderLogic;
 import de.itsawade.itsawade.model.BlogPost;
 import de.itsawade.itsawade.model.Gallerys;
 import de.itsawade.itsawade.model.ImageList;
 import de.itsawade.itsawade.model.Images;
+import de.itsawade.itsawade.ui.activitys.ImageDetailActivity;
 import de.itsawade.itsawade.ui.adapter.ImagesAdapter;
+import de.itsawade.itsawade.util.Function;
 import de.itsawade.itsawade.util.OnItemClickListener;
 
 /**
@@ -35,6 +38,7 @@ public class GalleryFragment extends Fragment implements LoaderManager.LoaderCal
     private List<Images> imagesList;
     ImageList list;
     private static final int PHOTO_DOWNLOADER = 0;
+    private View progress;
 
     public GalleryFragment() {
         // Required empty public constructor
@@ -69,6 +73,7 @@ public class GalleryFragment extends Fragment implements LoaderManager.LoaderCal
         recyclerView.setLayoutManager(new LinearLayoutManager(c));
         TextView textView = (TextView)viewGalleryFragment.findViewById(R.id.titleGallery);
         textView.setText(gallerys.getTitle());
+        progress = viewGalleryFragment.findViewById(R.id.progress);
 
         onLoad();
 
@@ -79,7 +84,13 @@ public class GalleryFragment extends Fragment implements LoaderManager.LoaderCal
     @Override
     public Loader<List<Images>> onCreateLoader(int id, Bundle args) {
         final FragmentActivity ctx = getActivity();
-        return new ImagesLoader(ctx, gallerys.getId());
+        return new GenericLoader<>(ctx, new Function<List<Images>>() {
+            @Override
+            public List<Images> apply() {
+                return PlaceholderLogic.getInstance().getImages(gallerys.getId());
+            }
+        });
+
     }
 
     @Override
@@ -104,6 +115,7 @@ public class GalleryFragment extends Fragment implements LoaderManager.LoaderCal
                 }
             });
             recyclerView.setAdapter(imagesAdapter);
+            progress.setVisibility(View.GONE);
         }
     }
 
@@ -114,17 +126,18 @@ public class GalleryFragment extends Fragment implements LoaderManager.LoaderCal
 
     public void onLoad() {
 
+        progress.setVisibility(View.VISIBLE);
         final FragmentActivity c = getActivity();
         c.getSupportLoaderManager().restartLoader(PHOTO_DOWNLOADER,null,this);
 
     }
 
     private void load(Images images, int pos) {
-        final FragmentActivity c = getActivity();
-        FragmentTransaction transaction = c.getSupportFragmentManager().beginTransaction();
-        ImageDetailFragment imageDetailFragment = ImageDetailFragment.newInstance(list,pos);
-        transaction.replace(R.id.activityContainer,imageDetailFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+       final FragmentActivity c = getActivity();
+        Intent intent = new Intent();
+        intent.setClass(c,ImageDetailActivity.class);
+        intent.putExtra(ImageDetailActivity.IMAGE_ITEM, list);
+        intent.putExtra(ImageDetailActivity.IMAGE_POS,pos);
+        startActivity(intent);
     }
 }

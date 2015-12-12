@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
+import de.itsawade.itsawade.model.Images;
 import de.itsawade.itsawade.net.PlaceholderService;
 import retrofit.GsonConverterFactory;
 import retrofit.Response;
@@ -30,16 +31,16 @@ public class PlaceholderLogic {
 
     private PlaceholderLogic() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://jsonplaceholder.typicode.com/")
+                .baseUrl("http://it-sawade.de")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         service = retrofit.create(PlaceholderService.class);
     }
 
-    public List<Post> getPosts() {
+    public List<Images> getImages(int id) {
         try {
-            Response<List<Post>> response = service.getPosts().execute();
+            Response<List<Images>> response = service.getImages(id).execute();
 
             if(response.isSuccess()) {
                 return response.body();
