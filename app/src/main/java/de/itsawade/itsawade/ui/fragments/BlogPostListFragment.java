@@ -4,6 +4,7 @@ package de.itsawade.itsawade.ui.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.itsawade.itsawade.R;
@@ -74,8 +76,14 @@ public class BlogPostListFragment extends Fragment implements LoaderManager.Load
 
     @Override
     public void onLoadFinished(Loader<BlogPostList> loader, BlogPostList data) {
-         BlogPostsAdapter adapter = new BlogPostsAdapter(data, new OnItemClickListener<String>() {
 
+        if (data != null) {
+            blogPostList = data.getResults();
+        } else {
+            blogPostList = new ArrayList<>();
+        }
+
+         BlogPostsAdapter adapter = new BlogPostsAdapter(data, new OnItemClickListener<String>() {
 
              @Override
              public void onItemClick(Gallerys item, int position) {
@@ -84,6 +92,12 @@ public class BlogPostListFragment extends Fragment implements LoaderManager.Load
 
              @Override
              public void onItemClick(int position) {
+
+                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                 BlogPostDetailFragment blogPostDetailFragment = BlogPostDetailFragment.newInstance(blogPostList.get(position));
+                 transaction.replace(R.id.activityContainer,blogPostDetailFragment);
+                 transaction.addToBackStack(null);
+                 transaction.commit();
 
              }
 

@@ -5,34 +5,34 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 import de.itsawade.itsawade.R;
-import de.itsawade.itsawade.model.BlogPost;
-import de.itsawade.itsawade.model.BlogPostList;
 import de.itsawade.itsawade.util.OnItemClickListener;
 
 
 /**
  * Created by Steve on 13.11.2015.
  */
-public class BlogPostsAdapter extends RecyclerView.Adapter<BlogPostsAdapter.ViewHolder> {
+public class BlogPostAdapter extends RecyclerView.Adapter<BlogPostAdapter.ViewHolder> {
 
-    private BlogPostList postList;
+
+    private List<String> imageList;
     private OnItemClickListener<String> onItemClickListener;
 
-    public BlogPostsAdapter(BlogPostList blogPostList, OnItemClickListener<String> onItemClickListener) {
-        this.postList = blogPostList;
+    public BlogPostAdapter(List<String> imageList, OnItemClickListener<String> onItemClickListener) {
+        this.imageList = imageList;
         this.onItemClickListener = onItemClickListener;
     }
 
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.blog_post,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.blog_item_detail,parent,false);
 
         return new ViewHolder(view);
     }
@@ -40,15 +40,12 @@ public class BlogPostsAdapter extends RecyclerView.Adapter<BlogPostsAdapter.View
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-        final BlogPost blogPost = postList.getResults().get(position);
+        String url = imageList.get(position);
 
-
-        holder.content.setText(blogPost.getContentText());
-        holder.autor.setText("posted by: " + blogPost.getUser().getFirst_name());
         holder.progressbar.setVisibility(View.VISIBLE);
 
         Picasso.with(holder.itemView.getContext())
-                .load(blogPost.getFeatured_image())
+                .load(url)
                 .resize(1350, 0)
                 .into(holder.imageView, new Callback() {
                     @Override
@@ -63,10 +60,6 @@ public class BlogPostsAdapter extends RecyclerView.Adapter<BlogPostsAdapter.View
                 });
 
 
-
-
-        holder.title.setText(blogPost.getTitle());
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,7 +73,7 @@ public class BlogPostsAdapter extends RecyclerView.Adapter<BlogPostsAdapter.View
 
     @Override
     public int getItemCount() {
-        return postList.getResults().size();
+        return imageList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -88,18 +81,12 @@ public class BlogPostsAdapter extends RecyclerView.Adapter<BlogPostsAdapter.View
         private final View progressbar;
         private ImageView imageView;
 
-        private TextView content;
-        private TextView title;
-        private TextView autor;
-
         public ViewHolder(View itemView) {
             super(itemView);
 
-            progressbar = itemView.findViewById(R.id.progressbarBlogPost);
-            imageView = (ImageView)itemView.findViewById(R.id.blogFeatured_image);
-            content = (TextView)itemView.findViewById(R.id.blogPostContent);
-            title = (TextView)itemView.findViewById(R.id.blogPostTitle);
-            autor = (TextView)itemView.findViewById(R.id.blogPostAutor);
+            progressbar = itemView.findViewById(R.id.progressbarBlogPostDetail);
+            imageView = (ImageView)itemView.findViewById(R.id.blog_imageDetail);
+
 
         }
     }
