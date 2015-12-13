@@ -3,17 +3,12 @@ package de.itsawade.itsawade.ui.activitys;
 import android.annotation.SuppressLint;
 import android.graphics.Matrix;
 import android.graphics.PointF;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,28 +18,23 @@ import com.squareup.picasso.Picasso;
 
 import de.itsawade.itsawade.R;
 import de.itsawade.itsawade.model.ImageList;
-import de.itsawade.itsawade.model.Images;
-import de.itsawade.itsawade.ui.adapter.CustomSwipeAdapter;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
 
-public class ImageDetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Image>{
+public class ImageDetailActivity extends AppCompatActivity {
 
-    Images images;
+
     ImageList list;
-    ViewPager viewPaper;
-    CustomSwipeAdapter customSwiperAdapter;
-    ScaleGestureDetector SGD;
     ImageView imageView;
 
     int pos;
 
     private static final String TAG = "Touch";
     @SuppressWarnings("unused")
-    private static final float MIN_ZOOM = 1f,MAX_ZOOM = 1f;
+    private static final float MIN_ZOOM = 0f,MAX_ZOOM = 1f;
 
     // These matrices will be used to scale points of the image
     Matrix matrix = new Matrix();
@@ -395,18 +385,5 @@ public class ImageDetailActivity extends AppCompatActivity implements LoaderMana
         Log.d("Touch Events ---------", sb.toString());
     }
 
-    @Override
-    public Loader<Image> onCreateLoader(int id, Bundle args) {
-        return null;
-    }
 
-    @Override
-    public void onLoadFinished(Loader<Image> loader, Image data) {
-
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Image> loader) {
-
-    }
 }

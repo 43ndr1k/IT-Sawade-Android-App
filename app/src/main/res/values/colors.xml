@@ -3,6 +3,6 @@
     <color name="colorPrimary">#000000</color>
     <color name="colorPrimaryDark">#00020e</color>
     <color name="colorAccent">#FF4081</color>
-
+    <color name="autor">#c60c56</color>
     <color name="black_overlay">#66000000</color>
 </resources>

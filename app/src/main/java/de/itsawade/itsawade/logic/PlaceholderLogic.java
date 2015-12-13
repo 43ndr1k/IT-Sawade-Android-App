@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
+import de.itsawade.itsawade.model.BlogPostList;
 import de.itsawade.itsawade.model.Images;
 import de.itsawade.itsawade.net.PlaceholderService;
 import retrofit.GsonConverterFactory;
@@ -50,6 +51,20 @@ public class PlaceholderLogic {
         }
 
         return new LinkedList<>();
+    }
+
+    public BlogPostList getBlogPostList() {
+
+        try {
+
+            Response<BlogPostList> response = service.getPosts().execute();
+            if (response.isSuccess()) {
+                return response.body();
+            }
+        } catch (IOException e) {
+            Log.e(TAG,e.getMessage());
+        }
+        return new BlogPostList();
     }
 
 

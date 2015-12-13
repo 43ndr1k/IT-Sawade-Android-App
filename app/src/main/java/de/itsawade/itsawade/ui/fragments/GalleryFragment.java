@@ -19,7 +19,6 @@ import java.util.List;
 import de.itsawade.itsawade.R;
 import de.itsawade.itsawade.async.GenericLoader;
 import de.itsawade.itsawade.logic.PlaceholderLogic;
-import de.itsawade.itsawade.model.BlogPost;
 import de.itsawade.itsawade.model.Gallerys;
 import de.itsawade.itsawade.model.ImageList;
 import de.itsawade.itsawade.model.Images;
@@ -105,7 +104,7 @@ public class GalleryFragment extends Fragment implements LoaderManager.LoaderCal
                 }
 
                 @Override
-                public void onItemClick(BlogPost item, int position) {
+                public void onItemClick(int position) {
 
                 }
 

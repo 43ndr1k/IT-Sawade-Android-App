@@ -3,17 +3,42 @@ package de.itsawade.itsawade.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+
 /**
  * Created by hendrik on 01.12.15.
  */
 public class BlogPost implements Parcelable{
 
-    int count, id, id_user, comments_count;
+    //BlogPost
+    int count, id, comments_count;
     String next, previous;
-    String publish_date, updated, title, url, short_url, content, slug, categories, allow_comments,
-    comments, tags, featured_image;
+
+    String publish_date, updated, title, url, short_url, content, slug, allow_comments,
+    tags, featured_image;
+
+    //user
     String username, email,first_name, last_name;
+    int id_user; // muss id heißen
+
+
     User user = new User(username, id_user, email,first_name, last_name);
+
+    List<Category> categories = new ArrayList<>();
+    List<Comment> comments = new ArrayList<>();
+
+
+    List<String> contentImagelist = new ArrayList<>();
+    private String contentText;
+
 
 
     public BlogPost(Parcel source) {
@@ -28,14 +53,15 @@ public class BlogPost implements Parcelable{
         this.short_url = source.readString();
         this.content = source.readString();
         this.slug = source.readString();
-        this.categories = source.readString();
         this.allow_comments = source.readString();
         this.comments_count = source.readInt();
-        this.comments = source.readString();
         this.tags = source.readString();
         this.featured_image = source.readString();
         this.user = new User(source.readString(), source.readInt(), source.readString(),
                 source.readString(), source.readString());
+        this.categories = source.readArrayList(null);
+        this.comments = source.readArrayList(null);
+        this.contentImagelist = source.readArrayList(null);
     }
 
     @Override
@@ -55,10 +81,8 @@ public class BlogPost implements Parcelable{
         dest.writeString(short_url);
         dest.writeString(content);
         dest.writeString(slug);
-        dest.writeString(categories);
         dest.writeString(allow_comments);
         dest.writeInt(comments_count);
-        dest.writeString(comments);
         dest.writeString(tags);
         dest.writeString(featured_image);
         dest.writeInt(id);
@@ -67,6 +91,9 @@ public class BlogPost implements Parcelable{
         dest.writeString(user.getEmail());
         dest.writeString(user.getFirst_name());
         dest.writeString(user.getLast_name());
+        dest.writeList(categories);
+        dest.writeList(comments);
+        dest.writeList(contentImagelist);
     }
 
     public static final Parcelable.Creator<BlogPost> CREATOR = new Parcelable.Creator<BlogPost>() {
@@ -183,12 +210,12 @@ public class BlogPost implements Parcelable{
         this.slug = slug;
     }
 
-    public String getCategories() {
+    public List<Category> getCategories() {
         return categories;
     }
 
-    public void setCategories(String categories) {
-        this.categories = categories;
+    public void setCategories(List<Category> category) {
+        this.categories = category;
     }
 
     public String getAllow_comments() {
@@ -207,11 +234,11 @@ public class BlogPost implements Parcelable{
         this.comments_count = comments_count;
     }
 
-    public String getComments() {
+    public List<Comment> getComments() {
         return comments;
     }
 
-    public void setComments(String comments) {
+    public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
 
@@ -224,7 +251,7 @@ public class BlogPost implements Parcelable{
     }
 
     public String getFeatured_image() {
-        return featured_image;
+        return "http://it-sawade.de/static/media/" + featured_image;
     }
 
     public void setFeatured_image(String featured_image) {
@@ -270,4 +297,32 @@ public class BlogPost implements Parcelable{
     public void setUser(User user) {
         this.user = user;
     }
+
+    public void setContentText(String text) {
+
+        Document document= Jsoup.parse(text);
+        String baseUri = "http://it-sawade.de";
+        Elements links = document.select("a[href]");
+        for (Element link : links)  {
+            if (!link.attr("href").toLowerCase().startsWith("http://"))    {
+                link.attr("href", baseUri + link.attr("href"));
+            }
+            if (!link.attr("src").toLowerCase().startsWith("http://"))    {
+                link.attr("src", link.attr("href"));
+            }
+            contentImagelist.add(link.attr("href"));
+        }
+        this.contentText = Jsoup.parse(document.html()).text();
+    }
+
+    public String getContentText() {
+        setContentText(getContent());
+        return contentText;
+    }
+
+    public List<String> getContentImagelist() {
+        return contentImagelist;
+    }
+
+
 }

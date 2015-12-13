@@ -6,8 +6,8 @@
             android:title="Import" />
         <item android:id="@+id/nav_gallery" android:icon="@android:drawable/ic_menu_gallery"
             android:title="Gallery" />
-        <item android:id="@+id/nav_slideshow" android:icon="@android:drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+        <item android:id="@+id/blog" android:icon="@android:drawable/sym_action_chat"
+            android:title="Blog" />
         <item android:id="@+id/nav_manage" android:icon="@android:drawable/ic_menu_manage"
             android:title="Tools" />
     </group>

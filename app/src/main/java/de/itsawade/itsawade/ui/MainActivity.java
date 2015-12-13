@@ -12,12 +12,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import de.itsawade.itsawade.R;
+import de.itsawade.itsawade.ui.fragments.BlogPostListFragment;
 import de.itsawade.itsawade.ui.fragments.GallerysFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private GallerysFragment gallerysFragment;
+    private BlogPostListFragment blogPostListFragment;
+
     private  static final int STRING_LOADER = 0;
     private static final String URL_KEY = "url";
 
@@ -40,6 +43,10 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        blogPostListFragment = BlogPostListFragment.newInstance();
+        transaction.replace(R.id.activityContainer, blogPostListFragment);
+        transaction.commit();
 
     }
 
@@ -92,7 +99,11 @@ public class MainActivity extends AppCompatActivity
 
 
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.blog) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            blogPostListFragment = BlogPostListFragment.newInstance();
+            transaction.replace(R.id.activityContainer, blogPostListFragment);
+            transaction.commit();
 
         } else if (id == R.id.nav_manage) {
 
