@@ -135,8 +135,8 @@ public class GalleryFragment extends Fragment implements LoaderManager.LoaderCal
        final FragmentActivity c = getActivity();
         Intent intent = new Intent();
         intent.setClass(c,ImageDetailActivity.class);
-        intent.putExtra(ImageDetailActivity.IMAGE_ITEM, list);
-        intent.putExtra(ImageDetailActivity.IMAGE_POS,pos);
+        intent.putExtra(ImageDetailActivity.IMAGE_ITEM, list.getList().get(pos));
+        intent.putExtra(ImageDetailActivity.URL_ITEM,list.getList().get(pos).getUrl());
         startActivity(intent);
     }
 }

@@ -15,7 +15,6 @@ import android.widget.TextView;
 import de.itsawade.itsawade.R;
 import de.itsawade.itsawade.model.BlogPost;
 import de.itsawade.itsawade.model.Gallerys;
-import de.itsawade.itsawade.model.ImageList;
 import de.itsawade.itsawade.model.Images;
 import de.itsawade.itsawade.ui.activitys.ImageDetailActivity;
 import de.itsawade.itsawade.ui.adapter.BlogPostDetailAdapter;
@@ -90,11 +89,9 @@ public class BlogPostDetailFragment extends Fragment {
                 final FragmentActivity c = getActivity();
                 Intent intent = new Intent();
                 intent.setClass(c, ImageDetailActivity.class);
-                ImageList list = new ImageList();
 
-                list.setList(blogPost.getContentImagelist());
-                intent.putExtra(ImageDetailActivity.IMAGE_ITEM,list);
-                intent.putExtra(ImageDetailActivity.IMAGE_POS,position);
+                intent.putExtra(ImageDetailActivity.IMAGE_ITEM,blogPost.getContentImagelist().get(position));
+                intent.putExtra(ImageDetailActivity.URL_ITEM,blogPost.getContentImagelist().get(position).getBaseUrl());
                 startActivity(intent);
             }
 

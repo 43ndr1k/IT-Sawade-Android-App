@@ -17,7 +17,7 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import de.itsawade.itsawade.R;
-import de.itsawade.itsawade.model.ImageList;
+import de.itsawade.itsawade.model.Images;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -27,7 +27,9 @@ import de.itsawade.itsawade.model.ImageList;
 public class ImageDetailActivity extends AppCompatActivity {
 
 
-    ImageList list;
+    public static final String URL_ITEM = "url_item";
+
+    Images image;
     ImageView imageView;
 
     int pos;
@@ -50,13 +52,14 @@ public class ImageDetailActivity extends AppCompatActivity {
     PointF start = new PointF();
     PointF mid = new PointF();
     float oldDist = 1f;
+    private String url;
 
     public ImageDetailActivity() {
 
     }
 
-    public static final String IMAGE_ITEM = "image_item";
-    public static final String IMAGE_POS  = "image_pos";
+    public static final String IMAGE_ITEM = "image_url";
+
 
 
     /**
@@ -107,13 +110,11 @@ public class ImageDetailActivity extends AppCompatActivity {
         if(getIntent().getExtras().containsKey(IMAGE_ITEM))
 
         {
-            list = getIntent().getExtras().getParcelable(IMAGE_ITEM);
+            image = getIntent().getExtras().getParcelable(IMAGE_ITEM);
         }
 
-        if(getIntent().getExtras().containsKey(IMAGE_POS))
-
-        {
-            pos = getIntent().getExtras().getInt(IMAGE_POS);
+        if (getIntent().getExtras().containsKey(URL_ITEM)) {
+            url = getIntent().getExtras().getString(URL_ITEM);
         }
         progressbar = findViewById(R.id.progressDetail);
 
@@ -122,7 +123,7 @@ public class ImageDetailActivity extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.fullscreen_content);
 
         Picasso.with(this)
-                .load(list.getList().get(pos).getUrl())
+                .load(url)
                 .resize(2000, 0) //(4000,0)
                 .into(imageView, new Callback() {
                             @Override
@@ -146,7 +147,7 @@ public class ImageDetailActivity extends AppCompatActivity {
                         });
 
         TextView textView = (TextView) findViewById(R.id.bildText);
-        textView.setText(list.getList().get(pos).getDescription());
+        textView.setText(image.getDescription());
 
 
 

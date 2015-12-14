@@ -21,6 +21,7 @@
         android:layout_height="wrap_content"
         android:textSize="14sp"
         android:layout_marginTop="10dp"
+        android:maxLines="10"
         android:id="@+id/blogPostContent"/>
 
     <TextView
