@@ -12,40 +12,34 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import de.itsawade.itsawade.R;
+import de.itsawade.itsawade.model.Images;
 import de.itsawade.itsawade.util.OnItemClickListener;
 
-
 /**
- * Created by Steve on 13.11.2015.
+ * Created by hendrik on 14.12.15.
  */
-public class BlogPostAdapter extends RecyclerView.Adapter<BlogPostAdapter.ViewHolder> {
+public class BlogPostDetailAdapter extends RecyclerView.Adapter<BlogPostDetailAdapter.ViewHolder> {
 
+    private final OnItemClickListener<String> onItemClickListener;
+    List<Images> blogPostImageList;
 
-    private List<String> imageList;
-    private OnItemClickListener<String> onItemClickListener;
-
-    public BlogPostAdapter(List<String> imageList, OnItemClickListener<String> onItemClickListener) {
-        this.imageList = imageList;
+    public BlogPostDetailAdapter(List<Images> blogPostImageList, OnItemClickListener<String> onItemClickListener) {
+        this.blogPostImageList = blogPostImageList;
         this.onItemClickListener = onItemClickListener;
     }
 
-
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BlogPostDetailAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.blog_item_detail,parent,false);
-
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-        String url = imageList.get(position);
-
-        holder.progressbar.setVisibility(View.VISIBLE);
-
+        String imageUrl = blogPostImageList.get(position).getBaseUrl();
         Picasso.with(holder.itemView.getContext())
-                .load(url)
+                .load(imageUrl)
                 .resize(1350, 0)
                 .into(holder.imageView, new Callback() {
                     @Override
@@ -58,7 +52,6 @@ public class BlogPostAdapter extends RecyclerView.Adapter<BlogPostAdapter.ViewHo
 
                     }
                 });
-
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +66,7 @@ public class BlogPostAdapter extends RecyclerView.Adapter<BlogPostAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return imageList.size();
+        return blogPostImageList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -85,9 +78,10 @@ public class BlogPostAdapter extends RecyclerView.Adapter<BlogPostAdapter.ViewHo
             super(itemView);
 
             progressbar = itemView.findViewById(R.id.progressbarBlogPostDetail);
-            imageView = (ImageView)itemView.findViewById(R.id.blog_imageDetail);
+            imageView = (ImageView) itemView.findViewById(R.id.blog_imageDetail);
 
 
         }
     }
+
 }

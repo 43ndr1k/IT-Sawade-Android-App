@@ -12,7 +12,9 @@ public class Images implements Parcelable {
     private int id;
     private String file;
 
-
+    public Images(String file) {
+        this.file = file;
+    }
 
     public Images(Parcel source) {
         this.file = source.readString();
@@ -33,6 +35,10 @@ public class Images implements Parcelable {
 
     public String getUrl() {
         return  "http://it-sawade.de/static/media/" + file;
+    }
+
+    public String getBaseUrl() {
+        return file;
     }
 
 

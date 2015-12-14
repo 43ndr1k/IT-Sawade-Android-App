@@ -20,6 +20,8 @@ public class ImageList implements Parcelable {
         source.readTypedList(list, Images.CREATOR);
     }
 
+    public ImageList() {}
+
     public ImageList(List<Images> list) {
         this.list = list;
     }

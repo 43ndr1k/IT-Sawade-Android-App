@@ -10,7 +10,8 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -36,9 +37,9 @@ public class BlogPost implements Parcelable{
     List<Comment> comments = new ArrayList<>();
 
 
-    List<String> contentImagelist = new ArrayList<>();
+    List<Images> contentImagelist = new ArrayList<>();
     private String contentText;
-
+    private String snipselText;
 
 
     public BlogPost(Parcel source) {
@@ -59,9 +60,9 @@ public class BlogPost implements Parcelable{
         this.featured_image = source.readString();
         this.user = new User(source.readString(), source.readInt(), source.readString(),
                 source.readString(), source.readString());
-        this.categories = source.readArrayList(null);
-        this.comments = source.readArrayList(null);
-        this.contentImagelist = source.readArrayList(null);
+        source.readTypedList(categories, Category.CREATOR);
+        source.readTypedList(comments,Comment.CREATOR);
+        source.readTypedList(contentImagelist,Images.CREATOR);
     }
 
     @Override
@@ -99,8 +100,6 @@ public class BlogPost implements Parcelable{
     public static final Parcelable.Creator<BlogPost> CREATOR = new Parcelable.Creator<BlogPost>() {
         @Override
         public BlogPost createFromParcel(Parcel source) {
-
-
             return new BlogPost(source);
         }
 
@@ -200,6 +199,7 @@ public class BlogPost implements Parcelable{
 
     public void setContent(String content) {
         this.content = content;
+        setContentText(getContent());
     }
 
     public String getSlug() {
@@ -302,17 +302,17 @@ public class BlogPost implements Parcelable{
 
         Document document= Jsoup.parse(text);
         String baseUri = "http://it-sawade.de";
-        Elements links = document.select("a[href]");
+        Elements links = document.select("img");
         for (Element link : links)  {
-            if (!link.attr("href").toLowerCase().startsWith("http://"))    {
-                link.attr("href", baseUri + link.attr("href"));
-            }
             if (!link.attr("src").toLowerCase().startsWith("http://"))    {
-                link.attr("src", link.attr("href"));
+                link.attr("src", baseUri + link.attr("src"));
             }
-            contentImagelist.add(link.attr("href"));
+            Images image = new Images(link.attr("src"));
+            contentImagelist.add(image);
         }
-        this.contentText = Jsoup.parse(document.html()).text();
+        String doc = Jsoup.parse(document.html()).text();
+        this.contentText = doc;
+        setContentTextSnipsel(doc);
     }
 
     public String getContentText() {
@@ -320,8 +320,20 @@ public class BlogPost implements Parcelable{
         return contentText;
     }
 
-    public List<String> getContentImagelist() {
+    public List<Images> getContentImagelist() {
         return contentImagelist;
+    }
+
+    private void setContentTextSnipsel(String text) {
+
+        Pattern pattern = Pattern.compile("(?<=[.?!;])\\s+(?=\\p{Lu})");
+        Matcher m = pattern.matcher(text);
+        while (m.find()) {
+            snipselText = m.group(0);
+        }
+    }
+    public String getContentTextSnipsel() {
+        return snipselText;
     }
 
 

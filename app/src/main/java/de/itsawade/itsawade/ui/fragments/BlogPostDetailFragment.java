@@ -1,6 +1,7 @@
 package de.itsawade.itsawade.ui.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -14,8 +15,10 @@ import android.widget.TextView;
 import de.itsawade.itsawade.R;
 import de.itsawade.itsawade.model.BlogPost;
 import de.itsawade.itsawade.model.Gallerys;
+import de.itsawade.itsawade.model.ImageList;
 import de.itsawade.itsawade.model.Images;
-import de.itsawade.itsawade.ui.adapter.BlogPostAdapter;
+import de.itsawade.itsawade.ui.activitys.ImageDetailActivity;
+import de.itsawade.itsawade.ui.adapter.BlogPostDetailAdapter;
 import de.itsawade.itsawade.util.OnItemClickListener;
 
 /**
@@ -67,14 +70,16 @@ public class BlogPostDetailFragment extends Fragment {
         blogPostTitleDetail = (TextView) viewBlogPostDetail.findViewById(R.id.blogPostTitleDetail);
         blogPostContentDetail = (TextView) viewBlogPostDetail.findViewById(R.id.blogPostContentDetail);
 
-        blogPostAutorDetail.setText(blogPost.getUser().getFirst_name());
+        blogPostAutorDetail.setText("posted by: " + blogPost.getUser().getFirst_name());
         blogPostTitleDetail.setText(blogPost.getTitle());
         blogPostContentDetail.setText(blogPost.getContentText());
+
+        //blogPostContentDetail.setMovementMethod(new ScrollingMovementMethod());
 
         final FragmentActivity c = getActivity();
         recyclerView = (RecyclerView) viewBlogPostDetail.findViewById(R.id.recylerViewBlogPostDetail);
         recyclerView.setLayoutManager(new LinearLayoutManager(c));
-        BlogPostAdapter adapter = new BlogPostAdapter(blogPost.getContentImagelist(), new OnItemClickListener<String>() {
+        BlogPostDetailAdapter adapter = new BlogPostDetailAdapter(blogPost.getContentImagelist(), new OnItemClickListener<String>() {
             @Override
             public void onItemClick(Gallerys item, int position) {
 
@@ -83,13 +88,14 @@ public class BlogPostDetailFragment extends Fragment {
             @Override
             public void onItemClick(int position) {
                 final FragmentActivity c = getActivity();
-/*                Intent intent = new Intent();
+                Intent intent = new Intent();
                 intent.setClass(c, ImageDetailActivity.class);
-                List<ImageList> list = new ArrayList<>();
-                list.add(blogPost);
+                ImageList list = new ImageList();
+
+                list.setList(blogPost.getContentImagelist());
                 intent.putExtra(ImageDetailActivity.IMAGE_ITEM,list);
                 intent.putExtra(ImageDetailActivity.IMAGE_POS,position);
-                startActivity(intent);*/
+                startActivity(intent);
             }
 
             @Override

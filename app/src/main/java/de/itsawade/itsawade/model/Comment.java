@@ -1,9 +1,12 @@
 package de.itsawade.itsawade.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by hendrik on 13.12.15.
  */
-public class Comment {
+public class Comment implements Parcelable {
 
     int id;
     String user, user_name, comment, submit_date, is_public, is_removed;
@@ -21,6 +24,28 @@ public class Comment {
         this.is_public = is_public;
         this.is_removed = is_removed;
     }
+
+    protected Comment(Parcel in) {
+        id = in.readInt();
+        user = in.readString();
+        user_name = in.readString();
+        comment = in.readString();
+        submit_date = in.readString();
+        is_public = in.readString();
+        is_removed = in.readString();
+    }
+
+    public static final Creator<Comment> CREATOR = new Creator<Comment>() {
+        @Override
+        public Comment createFromParcel(Parcel in) {
+            return new Comment(in);
+        }
+
+        @Override
+        public Comment[] newArray(int size) {
+            return new Comment[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -76,5 +101,21 @@ public class Comment {
 
     public void setIs_removed(String is_removed) {
         this.is_removed = is_removed;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(user);
+        dest.writeString(user_name);
+        dest.writeString(comment);
+        dest.writeString(submit_date);
+        dest.writeString(is_public);
+        dest.writeString(is_removed);
     }
 }
