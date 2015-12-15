@@ -119,6 +119,10 @@ public class BlogPostDetailFragment extends Fragment {
         });
         recyclerView.setAdapter(adapter);
 
+        if (blogPost.getContentImagelist().size() < 1) {
+            recyclerView.setVisibility(viewBlogPostDetail.GONE);
+        }
+
         /**
          * RecylerView Comments
          */
@@ -127,7 +131,9 @@ public class BlogPostDetailFragment extends Fragment {
         CommentAdapter commentAdapter = new CommentAdapter(blogPost.getComments());
         recyclerViewComments.setAdapter(commentAdapter);
 
-
+        if (blogPost.getComments().size() < 1) {
+            recyclerViewComments.setVisibility(viewBlogPostDetail.GONE);
+        }
 
 
         return viewBlogPostDetail;
