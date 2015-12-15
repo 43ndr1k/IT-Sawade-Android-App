@@ -37,16 +37,64 @@
         android:layout_below="@+id/blogPostContentDetail"
         android:layout_above="@+id/blogPostAutorDetail" />
 
-    <TextView
+    <GridLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="12sp"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/autor"
-        android:id="@+id/blogPostAutorDetail"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/autor"
+            android:id="@+id/blogPostAutorDetail"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/autor"
+            android:id="@+id/blogPostDateDetail"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/blogPostComentCountDetail"
+            android:textSize="12sp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/autor"/>
+
+
+    </GridLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/blogPostCommentTitle"
+            android:textColor="@color/autor"
+            android:text="@string/CommentsTitle"
+        />
+
+    <View
+        android:background="@android:color/darker_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:id="@+id/recylerViewBlogPostDetailComments"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/blogPostContentDetail"
+            android:layout_above="@+id/blogPostAutorDetail" />
+
 </LinearLayout>
 
 </ScrollView>

@@ -18,6 +18,8 @@ import de.itsawade.itsawade.model.Gallerys;
 import de.itsawade.itsawade.model.Images;
 import de.itsawade.itsawade.ui.activitys.ImageDetailActivity;
 import de.itsawade.itsawade.ui.adapter.BlogPostDetailAdapter;
+import de.itsawade.itsawade.ui.adapter.CommentAdapter;
+import de.itsawade.itsawade.util.DateConvert;
 import de.itsawade.itsawade.util.OnItemClickListener;
 
 /**
@@ -26,16 +28,18 @@ import de.itsawade.itsawade.util.OnItemClickListener;
 public class BlogPostDetailFragment extends Fragment {
 
 
-    private static final int BLOG_POST_DOWNLOADER = 0;
+
     public static final String BlogPost_ITEM = "BlogPost_item";
 
 
-    RecyclerView recyclerView;
+    RecyclerView recyclerView, recyclerViewComments;
     BlogPost blogPost;
     int pos;
     TextView blogPostTitleDetail;
     TextView blogPostContentDetail;
     TextView blogPostAutorDetail;
+    TextView blogPostDateDetail;
+    TextView blogPostCommentDetail;
 
     public BlogPostDetailFragment() {
         // Required empty public constructor
@@ -68,14 +72,27 @@ public class BlogPostDetailFragment extends Fragment {
         blogPostAutorDetail = (TextView) viewBlogPostDetail.findViewById(R.id.blogPostAutorDetail);
         blogPostTitleDetail = (TextView) viewBlogPostDetail.findViewById(R.id.blogPostTitleDetail);
         blogPostContentDetail = (TextView) viewBlogPostDetail.findViewById(R.id.blogPostContentDetail);
+        blogPostDateDetail = (TextView) viewBlogPostDetail.findViewById(R.id.blogPostDateDetail);
+        blogPostCommentDetail = (TextView) viewBlogPostDetail.findViewById(R.id.blogPostComentCountDetail);
 
-        blogPostAutorDetail.setText("posted by: " + blogPost.getUser().getFirst_name());
+        blogPostAutorDetail.setText("Posted by: " + blogPost.getUser().getFirst_name());
         blogPostTitleDetail.setText(blogPost.getTitle());
         blogPostContentDetail.setText(blogPost.getContentText());
+
+
+        DateConvert date = new DateConvert();
+        String a = date.DateConvert(blogPost.getPublish_date());
+
+        blogPostDateDetail.setText(" | At: " + a);
+        blogPostCommentDetail.setText(" | " + blogPost.getComments_count() + " comment");
 
         //blogPostContentDetail.setMovementMethod(new ScrollingMovementMethod());
 
         final FragmentActivity c = getActivity();
+
+        /**
+         * RecylerView bilder
+         */
         recyclerView = (RecyclerView) viewBlogPostDetail.findViewById(R.id.recylerViewBlogPostDetail);
         recyclerView.setLayoutManager(new LinearLayoutManager(c));
         BlogPostDetailAdapter adapter = new BlogPostDetailAdapter(blogPost.getContentImagelist(), new OnItemClickListener<String>() {
@@ -101,6 +118,17 @@ public class BlogPostDetailFragment extends Fragment {
             }
         });
         recyclerView.setAdapter(adapter);
+
+        /**
+         * RecylerView Comments
+         */
+        recyclerViewComments = (RecyclerView) viewBlogPostDetail.findViewById(R.id.recylerViewBlogPostDetailComments);
+        recyclerViewComments.setLayoutManager(new LinearLayoutManager(c));
+        CommentAdapter commentAdapter = new CommentAdapter(blogPost.getComments());
+        recyclerViewComments.setAdapter(commentAdapter);
+
+
+
 
         return viewBlogPostDetail;
     }

@@ -5,7 +5,7 @@
 
 
     <ImageView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/blogFeatured_image"/>
 
@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:textSize="21sp"
         android:textColor="@color/colorPrimary"
-        android:id="@+id/blogPostTitle"/>
+        android:id="@+id/blogPostTitle"
+        />
 
     <TextView
         android:layout_width="match_parent"
@@ -24,13 +25,41 @@
         android:maxLines="10"
         android:id="@+id/blogPostContent"/>
 
-    <TextView
+    <GridLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="12sp"
-        android:layout_marginTop="5dp"
-        android:textColor="@color/autor"
-        android:id="@+id/blogPostAutor"/>
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/autor"
+            android:id="@+id/blogPostAutor"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/autor"
+            android:id="@+id/blogPostDate"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/blogPostComentCount"
+            android:textSize="12sp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/autor"/>
+
+
+    </GridLayout>
+
+
 
     <ProgressBar
         android:id="@+id/progressbarBlogPost"

@@ -13,6 +13,7 @@ import com.squareup.picasso.Picasso;
 import de.itsawade.itsawade.R;
 import de.itsawade.itsawade.model.BlogPost;
 import de.itsawade.itsawade.model.BlogPostList;
+import de.itsawade.itsawade.util.DateConvert;
 import de.itsawade.itsawade.util.OnItemClickListener;
 
 
@@ -44,7 +45,16 @@ public class BlogPostsAdapter extends RecyclerView.Adapter<BlogPostsAdapter.View
 
 
         holder.content.setText(blogPost.getContentText());
-        holder.autor.setText("posted by: " + blogPost.getUser().getFirst_name());
+        holder.autor.setText("Posted by: " + blogPost.getUser().getFirst_name());
+
+        DateConvert date = new DateConvert();
+        String a = date.DateConvert(blogPost.getPublish_date());
+
+
+
+
+        holder.blogPostdate.setText(" | At: " + a);
+        holder.commentCount.setText(" | " + blogPost.getComments_count() + " comment");
         holder.progressbar.setVisibility(View.VISIBLE);
 
         Picasso.with(holder.itemView.getContext())
@@ -91,6 +101,8 @@ public class BlogPostsAdapter extends RecyclerView.Adapter<BlogPostsAdapter.View
         private TextView content;
         private TextView title;
         private TextView autor;
+        private TextView blogPostdate;
+        private TextView commentCount;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -100,6 +112,9 @@ public class BlogPostsAdapter extends RecyclerView.Adapter<BlogPostsAdapter.View
             content = (TextView)itemView.findViewById(R.id.blogPostContent);
             title = (TextView)itemView.findViewById(R.id.blogPostTitle);
             autor = (TextView)itemView.findViewById(R.id.blogPostAutor);
+            blogPostdate = (TextView) itemView.findViewById(R.id.blogPostDate);
+            commentCount = (TextView) itemView.findViewById(R.id.blogPostComentCount);
+
 
         }
     }
