@@ -9,13 +9,21 @@ import android.os.Parcelable;
 public class Comment implements Parcelable {
 
     int id;
-    String user, user_name, comment, submit_date, is_public, is_removed;
+    String user_name, comment, submit_date, is_public, is_removed;
+
+    private String username;
+    private int id_user;
+    private String email;
+    private String first_name;
+    private String last_name;
+
+    User user = new User(username, id_user, email,first_name, last_name);
 
     public Comment() {
 
     }
 
-    public Comment(int id, String user, String user_name, String comment, String submit_date, String is_public, String is_removed) {
+    public Comment(int id, User user, String user_name, String comment, String submit_date, String is_public, String is_removed) {
         this.id = id;
         this.user = user;
         this.user_name = user_name;
@@ -27,7 +35,8 @@ public class Comment implements Parcelable {
 
     protected Comment(Parcel in) {
         id = in.readInt();
-        user = in.readString();
+        this.user = new User(in.readString(), in.readInt(), in.readString(),
+                in.readString(), in.readString());
         user_name = in.readString();
         comment = in.readString();
         submit_date = in.readString();
@@ -55,11 +64,11 @@ public class Comment implements Parcelable {
         this.id = id;
     }
 
-    public String getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(String user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
@@ -111,7 +120,11 @@ public class Comment implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
-        dest.writeString(user);
+        dest.writeString(user.getUsername());
+        dest.writeInt(user.getId());
+        dest.writeString(user.getEmail());
+        dest.writeString(user.getFirst_name());
+        dest.writeString(user.getLast_name());
         dest.writeString(user_name);
         dest.writeString(comment);
         dest.writeString(submit_date);
