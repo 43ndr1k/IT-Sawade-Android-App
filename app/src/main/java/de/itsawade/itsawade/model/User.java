@@ -19,6 +19,10 @@ public class User implements Parcelable {
         this.first_name = first_name;
     }
 
+    public User () {
+
+    }
+
     protected User(Parcel in) {
         id = in.readInt();
         username = in.readString();
@@ -48,7 +52,7 @@ public class User implements Parcelable {
     }
 
     public String getUsername() {
-        return username;
+            return username;
     }
 
     public void setUsername(String username) {

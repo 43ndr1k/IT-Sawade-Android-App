@@ -17,7 +17,6 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import de.itsawade.itsawade.R;
-import de.itsawade.itsawade.model.Images;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -28,11 +27,10 @@ public class ImageDetailActivity extends AppCompatActivity {
 
 
     public static final String URL_ITEM = "url_item";
-
-    Images image;
+    public static final String DESCRIPTION_ITEM = "des";
+    private String description = "";
     ImageView imageView;
 
-    int pos;
 
     private static final String TAG = "Touch";
     @SuppressWarnings("unused")
@@ -58,7 +56,7 @@ public class ImageDetailActivity extends AppCompatActivity {
 
     }
 
-    public static final String IMAGE_ITEM = "image_url";
+
 
 
 
@@ -107,15 +105,16 @@ public class ImageDetailActivity extends AppCompatActivity {
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
 
-        if(getIntent().getExtras().containsKey(IMAGE_ITEM))
+        if(getIntent().getExtras().containsKey(DESCRIPTION_ITEM))
 
         {
-            image = getIntent().getExtras().getParcelable(IMAGE_ITEM);
+            description = getIntent().getExtras().getString(DESCRIPTION_ITEM);
         }
 
         if (getIntent().getExtras().containsKey(URL_ITEM)) {
             url = getIntent().getExtras().getString(URL_ITEM);
         }
+
         progressbar = findViewById(R.id.progressDetail);
 
         progressbar.setVisibility(View.VISIBLE);
@@ -147,11 +146,7 @@ public class ImageDetailActivity extends AppCompatActivity {
                         });
 
         TextView textView = (TextView) findViewById(R.id.bildText);
-        textView.setText(image.getDescription());
-
-
-
-
+        textView.setText(description);
 
     }
 

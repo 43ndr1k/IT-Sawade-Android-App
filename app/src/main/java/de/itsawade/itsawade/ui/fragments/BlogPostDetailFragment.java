@@ -107,7 +107,7 @@ public class BlogPostDetailFragment extends Fragment {
                 Intent intent = new Intent();
                 intent.setClass(c, ImageDetailActivity.class);
 
-                intent.putExtra(ImageDetailActivity.IMAGE_ITEM,blogPost.getContentImagelist().get(position));
+                intent.putExtra(ImageDetailActivity.DESCRIPTION_ITEM,blogPost.getContentImagelist().get(position).getDescription());
                 intent.putExtra(ImageDetailActivity.URL_ITEM,blogPost.getContentImagelist().get(position).getBaseUrl());
                 startActivity(intent);
             }

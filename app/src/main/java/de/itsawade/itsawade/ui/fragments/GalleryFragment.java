@@ -110,7 +110,7 @@ public class GalleryFragment extends Fragment implements LoaderManager.LoaderCal
 
                 @Override
                 public void onItemClick(Images item, int position) {
-                        load(item, position);
+                        load(position);
                 }
             });
             recyclerView.setAdapter(imagesAdapter);
@@ -131,11 +131,11 @@ public class GalleryFragment extends Fragment implements LoaderManager.LoaderCal
 
     }
 
-    private void load(Images images, int pos) {
+    private void load(int pos) {
        final FragmentActivity c = getActivity();
         Intent intent = new Intent();
         intent.setClass(c,ImageDetailActivity.class);
-        intent.putExtra(ImageDetailActivity.IMAGE_ITEM, list.getList().get(pos));
+        intent.putExtra(ImageDetailActivity.DESCRIPTION_ITEM, list.getList().get(pos).getDescription());
         intent.putExtra(ImageDetailActivity.URL_ITEM,list.getList().get(pos).getUrl());
         startActivity(intent);
     }

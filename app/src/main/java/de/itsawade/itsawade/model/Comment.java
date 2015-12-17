@@ -17,7 +17,7 @@ public class Comment implements Parcelable {
     private String first_name;
     private String last_name;
 
-    User user = new User(username, id_user, email,first_name, last_name);
+    User user = new User();
 
     public Comment() {
 
@@ -35,8 +35,6 @@ public class Comment implements Parcelable {
 
     protected Comment(Parcel in) {
         id = in.readInt();
-        this.user = new User(in.readString(), in.readInt(), in.readString(),
-                in.readString(), in.readString());
         user_name = in.readString();
         comment = in.readString();
         submit_date = in.readString();
@@ -120,11 +118,6 @@ public class Comment implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
-        dest.writeString(user.getUsername());
-        dest.writeInt(user.getId());
-        dest.writeString(user.getEmail());
-        dest.writeString(user.getFirst_name());
-        dest.writeString(user.getLast_name());
         dest.writeString(user_name);
         dest.writeString(comment);
         dest.writeString(submit_date);
