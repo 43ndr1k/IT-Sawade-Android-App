@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,7 +19,6 @@ import de.itsawade.itsawade.model.Gallerys;
 import de.itsawade.itsawade.model.Images;
 import de.itsawade.itsawade.ui.activitys.ImageDetailActivity;
 import de.itsawade.itsawade.ui.adapter.BlogPostDetailAdapter;
-import de.itsawade.itsawade.ui.adapter.CommentAdapter;
 import de.itsawade.itsawade.util.DateConvert;
 import de.itsawade.itsawade.util.OnItemClickListener;
 
@@ -40,6 +40,10 @@ public class BlogPostDetailFragment extends Fragment {
     TextView blogPostAutorDetail;
     TextView blogPostDateDetail;
     TextView blogPostCommentDetail;
+    TextView blogPostCommentTitle;
+
+    View viewBlogPostDetail;
+    private int commentclick = 0;
 
     public BlogPostDetailFragment() {
         // Required empty public constructor
@@ -61,7 +65,7 @@ public class BlogPostDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View viewBlogPostDetail = inflater.inflate(R.layout.fragment_blog_post_detail, container, false);
+        viewBlogPostDetail = inflater.inflate(R.layout.fragment_blog_post_detail, container, false);
 
         Bundle args = getArguments();
         if (args.containsKey(BlogPost_ITEM)) {
@@ -74,11 +78,12 @@ public class BlogPostDetailFragment extends Fragment {
         blogPostContentDetail = (TextView) viewBlogPostDetail.findViewById(R.id.blogPostContentDetail);
         blogPostDateDetail = (TextView) viewBlogPostDetail.findViewById(R.id.blogPostDateDetail);
         blogPostCommentDetail = (TextView) viewBlogPostDetail.findViewById(R.id.blogPostComentCountDetail);
+        blogPostCommentTitle = (TextView) viewBlogPostDetail.findViewById(R.id.blogPostCommentTitle);
 
         blogPostAutorDetail.setText("Posted by: " + blogPost.getUser().getFirst_name());
         blogPostTitleDetail.setText(blogPost.getTitle());
         blogPostContentDetail.setText(blogPost.getContentText());
-
+        blogPostCommentTitle.setText(blogPost.getComments_count() + " " + getResources().getString(R.string.CommentsTitle));
 
         DateConvert date = new DateConvert();
         String a = date.DateConvert(blogPost.getPublish_date());
@@ -123,20 +128,28 @@ public class BlogPostDetailFragment extends Fragment {
             recyclerView.setVisibility(viewBlogPostDetail.GONE);
         }
 
-        /**
-         * RecylerView Comments
-         */
-        recyclerViewComments = (RecyclerView) viewBlogPostDetail.findViewById(R.id.recylerViewBlogPostDetailComments);
-        recyclerViewComments.setLayoutManager(new LinearLayoutManager(c));
-        CommentAdapter commentAdapter = new CommentAdapter(blogPost.getComments());
-        recyclerViewComments.setAdapter(commentAdapter);
 
-        if (blogPost.getComments().size() < 1) {
-            recyclerViewComments.setVisibility(viewBlogPostDetail.GONE);
-        }
 
+
+
+        blogPostCommentTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                commentsClick();
+            }
+        });
 
         return viewBlogPostDetail;
+    }
+
+    private void commentsClick() {
+        if (blogPost.getComments().size() > 1) {
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            CommentsFragment commentsFragment = CommentsFragment.newInstance(blogPost);
+            transaction.replace(R.id.activityContainer,commentsFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
     }
 
 
