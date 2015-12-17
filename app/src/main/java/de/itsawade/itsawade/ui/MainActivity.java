@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import de.itsawade.itsawade.R;
 import de.itsawade.itsawade.ui.fragments.BlogPostListFragment;
 import de.itsawade.itsawade.ui.fragments.GallerysFragment;
+import de.itsawade.itsawade.ui.fragments.OptionenFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -76,6 +77,12 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            OptionenFragment optionenFragment = OptionenFragment.newInstance();
+            transaction.replace(R.id.activityContainer, optionenFragment);
+            transaction.commit();
+
             return true;
         }
 
@@ -103,8 +110,8 @@ public class MainActivity extends AppCompatActivity
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             blogPostListFragment = BlogPostListFragment.newInstance();
             transaction.replace(R.id.activityContainer, blogPostListFragment);
+            transaction.addToBackStack(null);
             transaction.commit();
-
         } /*else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {

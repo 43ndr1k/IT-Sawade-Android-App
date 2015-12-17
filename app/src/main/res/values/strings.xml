@@ -13,4 +13,10 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="CommentsTitle">Comments</string>
+    <string name="keyText">Oath Access Token</string>
+    <string name="buttonkey">Speichern</string>
+    <string name="loginUserText">Username</string>
+    <string name="login">Noch Keine Login Daten vorhanden!</string>
+    <string name="optionen">Optionen</string>
+    <string name="botomKonto">Konto</string>
 </resources>
