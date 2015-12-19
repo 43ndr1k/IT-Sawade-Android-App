@@ -19,4 +19,10 @@
     <string name="login">Noch Keine Login Daten vorhanden!</string>
     <string name="optionen">Optionen</string>
     <string name="botomKonto">Konto</string>
+    <string name="next">Weiter</string>
+    <string name="photogallery_txt">Foto wählen</string>
+    <string name="pls_wait_txt">Bitte Warten</string>
+    <string name="addBlogPostText">Dein Text hier</string>
+    <string name="addBlogPostTitle">Titel</string>
+    <string name="BildWaehlen">Titelbild wählen</string>
 </resources>

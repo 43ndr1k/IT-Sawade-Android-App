@@ -1,5 +1,6 @@
 package de.itsawade.itsawade.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
@@ -12,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import de.itsawade.itsawade.R;
+import de.itsawade.itsawade.ui.activitys.GalleryPageActivity;
 import de.itsawade.itsawade.ui.fragments.BlogPostListFragment;
 import de.itsawade.itsawade.ui.fragments.GallerysFragment;
 import de.itsawade.itsawade.ui.fragments.OptionenFragment;
@@ -97,6 +99,10 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_camara) {
             // Handle the camera action
+            Intent intent = new Intent();
+            intent.setClass(this, GalleryPageActivity.class);
+            startActivity(intent);
+
         } else if (id == R.id.nav_gallery) {
 
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

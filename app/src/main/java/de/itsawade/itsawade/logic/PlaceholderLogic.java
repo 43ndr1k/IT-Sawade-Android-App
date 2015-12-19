@@ -67,5 +67,18 @@ public class PlaceholderLogic {
         return new BlogPostList();
     }
 
+    public List<Images> getAllImages() {
+        try {
+            Response<List<Images>> response = service.getAllImages().execute();
+
+            if(response.isSuccess()) {
+                return response.body();
+            }
+        } catch (IOException e) {
+            Log.e(TAG,e.getMessage(),e);
+        }
+        return new LinkedList<>();
+    }
+
 
 }

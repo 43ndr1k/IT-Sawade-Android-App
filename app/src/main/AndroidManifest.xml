@@ -3,6 +3,7 @@
     package="de.itsawade.itsawade">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-sdk android:minSdkVersion="11" android:targetSdkVersion="15" />
 
     <application
         android:allowBackup="true"
@@ -24,7 +25,9 @@
             android:name=".ui.activitys.ImageDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_image_detail"
-            android:theme="@style/FullscreenTheme"></activity>
+            android:theme="@style/FullscreenTheme" />
+        <activity android:name=".ui.activitys.GalleryPageActivity" />
+        <activity android:name=".ui.activitys.AddNewBlogPostActivity"></activity>
     </application>
 
 </manifest>

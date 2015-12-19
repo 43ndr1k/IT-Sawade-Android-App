@@ -143,7 +143,7 @@ public class BlogPostDetailFragment extends Fragment {
     }
 
     private void commentsClick() {
-        if (blogPost.getComments().size() > 1) {
+        if (blogPost.getComments().size() > 0) {
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             CommentsFragment commentsFragment = CommentsFragment.newInstance(blogPost);
             transaction.replace(R.id.activityContainer,commentsFragment);

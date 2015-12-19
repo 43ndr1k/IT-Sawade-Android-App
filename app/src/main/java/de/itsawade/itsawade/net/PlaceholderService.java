@@ -16,4 +16,7 @@ public interface PlaceholderService {
 
     @GET("/api/posts/")
     Call<BlogPostList> getPosts();
+
+    @GET("/api/images/")
+    Call<List<Images>> getAllImages();
 }

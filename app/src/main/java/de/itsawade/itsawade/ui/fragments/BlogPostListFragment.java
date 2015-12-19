@@ -1,7 +1,10 @@
 package de.itsawade.itsawade.ui.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -23,6 +26,7 @@ import de.itsawade.itsawade.model.BlogPost;
 import de.itsawade.itsawade.model.BlogPostList;
 import de.itsawade.itsawade.model.Gallerys;
 import de.itsawade.itsawade.model.Images;
+import de.itsawade.itsawade.ui.activitys.AddNewBlogPostActivity;
 import de.itsawade.itsawade.ui.adapter.BlogPostsAdapter;
 import de.itsawade.itsawade.util.Function;
 import de.itsawade.itsawade.util.OnItemClickListener;
@@ -59,6 +63,23 @@ public class BlogPostListFragment extends Fragment implements LoaderManager.Load
         recyclerView.setLayoutManager(new LinearLayoutManager(c));
 
         c.getSupportLoaderManager().restartLoader(BLOG_POST_LIST_DOWNLOADER, null, this);
+
+        FloatingActionButton fab = (FloatingActionButton) blogPostListFragmentView.findViewById(R.id.fab);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent();
+                intent.setClass(getContext(), AddNewBlogPostActivity.class);
+                startActivity(intent);
+
+
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
         return blogPostListFragmentView;
     }
 

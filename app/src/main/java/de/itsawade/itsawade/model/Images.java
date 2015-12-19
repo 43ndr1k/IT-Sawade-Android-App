@@ -11,6 +11,7 @@ public class Images implements Parcelable {
     private String description;
     private int id;
     private String file;
+    private int gallery;
 
     public Images(String file) {
         this.file = file;
@@ -20,6 +21,7 @@ public class Images implements Parcelable {
         this.file = source.readString();
         this.description = source.readString();
         this.id = source.readInt();
+        this.gallery = source.readInt();
 
     }
 
@@ -62,6 +64,14 @@ public class Images implements Parcelable {
         this.id = id;
     }
 
+    public int getGallery() {
+        return gallery;
+    }
+
+    public void setGallery(int gallery) {
+        this.gallery = gallery;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -72,6 +82,7 @@ public class Images implements Parcelable {
         dest.writeString(file);
         dest.writeString(description);
         dest.writeInt(id);
+        dest.writeInt(gallery);
     }
 
     public static final Creator<Images> CREATOR = new Creator<Images>() {
