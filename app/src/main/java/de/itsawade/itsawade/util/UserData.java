@@ -17,8 +17,12 @@ public class UserData {
     private static final String LOGIN_USER = "login_user";
     private String user;
     private SharedPreferences settings;
-    private String accessToken;
+    private String accessToken = null;
 
+
+    public UserData(Context context) {
+        readLoginData(context);
+    }
     public String getUser() {
         return user;
     }
@@ -30,7 +34,6 @@ public class UserData {
     public void readLoginData(Context context) {
 
         settings = context.getSharedPreferences(PREFS_NAME, context.MODE_PRIVATE);
-        // check whether access token already saved
         accessToken = settings.getString(SHPREF_KEY_ACCESS_TOKEN, null);
         user = settings.getString(LOGIN_USER, null);
 

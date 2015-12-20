@@ -30,6 +30,7 @@ import de.itsawade.itsawade.ui.activitys.AddNewBlogPostActivity;
 import de.itsawade.itsawade.ui.adapter.BlogPostsAdapter;
 import de.itsawade.itsawade.util.Function;
 import de.itsawade.itsawade.util.OnItemClickListener;
+import de.itsawade.itsawade.util.UserData;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -79,6 +80,12 @@ public class BlogPostListFragment extends Fragment implements LoaderManager.Load
                         .setAction("Action", null).show();
             }
         });
+        UserData userData = new UserData(c);
+        if (userData.getAccessToken() != null) {
+            fab.setVisibility(View.VISIBLE);
+        } else {
+            fab.setVisibility(View.GONE);
+        }
 
         return blogPostListFragmentView;
     }

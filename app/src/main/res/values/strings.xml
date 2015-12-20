@@ -25,4 +25,6 @@
     <string name="addBlogPostText">Dein Text hier</string>
     <string name="addBlogPostTitle">Titel</string>
     <string name="BildWaehlen">Titelbild wählen</string>
+    <string name="clientSecretText">Client Secret</string>
+    <string name="ClientId">Client Id</string>
 </resources>
