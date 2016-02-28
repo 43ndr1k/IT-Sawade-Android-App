@@ -8,6 +8,8 @@
             android:title="Gallery" />
         <item android:id="@+id/blog" android:icon="@android:drawable/sym_action_chat"
             android:title="Blog" />
+        <item android:id="@+id/addPicture" android:icon="@android:drawable/ic_input_add"
+            android:title="Bild upload" />
 
     </group>
 

@@ -10,6 +10,20 @@
         android:title="Upload"/>
 
     <item
+        android:id="@+id/action_uploadFile"
+        android:orderInCategory="200"
+        app:showAsAction="always"
+        android:icon="@android:drawable/ic_input_add"
+        android:title="UploadFile"/>
+
+        <item
+        android:id="@+id/action_newPicture"
+        android:orderInCategory="200"
+        app:showAsAction="always"
+        android:icon="@android:drawable/ic_menu_camera"
+        android:title="NewPicture"/>
+
+    <item
         android:id="@+id/action_back"
         android:orderInCategory="200"
         app:showAsAction="always"

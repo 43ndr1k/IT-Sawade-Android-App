@@ -76,7 +76,7 @@ public class BlogPostListFragment extends Fragment implements LoaderManager.Load
                 startActivity(intent);
 
 
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Nichts geposted", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });

@@ -1,5 +1,8 @@
 package de.itsawade.itsawade.net;
 
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.ResponseBody;
+
 import java.util.List;
 
 import de.itsawade.itsawade.model.BlogPostList;
@@ -9,7 +12,9 @@ import de.itsawade.itsawade.model.UserList;
 import retrofit.Call;
 import retrofit.http.Body;
 import retrofit.http.GET;
+import retrofit.http.Multipart;
 import retrofit.http.POST;
+import retrofit.http.Part;
 import retrofit.http.Path;
 
 
@@ -29,6 +34,13 @@ public interface PlaceholderService {
     Call<UserList> getAllUsers();
 
     @POST("/api/post/")
-    Call<String> postBlogPost(@Body NewBlogPost newBlogPost);
+    Call<ResponseBody> postBlogPost(@Body NewBlogPost newBlogPost);
+
+    @Multipart
+    @POST("/upload")
+    Call<String> uploadPicture(
+            @Part("myfile\"; filename=\"image.png\" ") RequestBody file,
+            @Part("description") RequestBody description);
+
 
 }

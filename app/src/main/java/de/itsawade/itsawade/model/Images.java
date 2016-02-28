@@ -31,12 +31,12 @@ public class Images implements Parcelable {
         String u = file.substring(file.lastIndexOf("/"));
         String a = file.substring(0,(file.length() - u.length()));
         String[] f = u.split("\\.");
-        String url = "http://it-sawade.de/static/media/" + a + "/.thumbnails" + u + f[0] + "-600x450.jpg";
+        String url = "https://it-sawade.de/static/media/" + a + "/.thumbnails" + u + f[0] + "-600x450.jpg";
         return  url;
     }
 
     public String getUrl() {
-        return  "http://it-sawade.de/static/media/" + file;
+        return  "https://it-sawade.de/static/media/" + file;
     }
 
     public String getBaseUrl() {

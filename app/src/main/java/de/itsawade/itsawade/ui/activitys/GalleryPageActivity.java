@@ -26,6 +26,7 @@ public class GalleryPageActivity extends AppCompatActivity implements LoaderMana
 
     private static final int PHOTO_DOWNLOADER = 0;
     private static final String IMAGE_URL_THUMBNAIL = "thumbnail_url";
+    private static final String IMAGE = "image";
 
     List<Images> images;
     Images image;
@@ -78,6 +79,7 @@ public class GalleryPageActivity extends AppCompatActivity implements LoaderMana
     Intent intent = new Intent();
     public void buttonClick(View view) {
 
+        intent.putExtra(IMAGE, image);
         intent.putExtra(IMAGE_URL, image.getBaseUrl());
         intent.putExtra(IMAGE_URL_THUMBNAIL, image.getThumbnailUrl());
         setResult(RESULT_OK, intent);

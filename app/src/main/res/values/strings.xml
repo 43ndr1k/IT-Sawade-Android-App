@@ -27,4 +27,7 @@
     <string name="BildWaehlen">Titelbild wählen</string>
     <string name="clientSecretText">Client Secret</string>
     <string name="ClientId">Client Id</string>
+    <string name="AddBilder">Bilder</string>
+    <string name="deleteBild">Löschen</string>
+    <string name="addBilderListe">Hinzufügen</string>
 </resources>

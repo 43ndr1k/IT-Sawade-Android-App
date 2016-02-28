@@ -34,6 +34,7 @@ public class GallerysFragment extends Fragment implements LoaderManager.LoaderCa
 
     private  static final int STRING_LOADER = 0;
     private static final String URL_KEY = "url";
+    private static final String URL_GALLERYS = "https://it-sawade.de/api/gallery";
     private RecyclerView recyclerView;
     static final int PICK_CONTACT_REQUEST = 1;
     public static final String DATA = "data";
@@ -60,7 +61,7 @@ public class GallerysFragment extends Fragment implements LoaderManager.LoaderCa
 
 
         Bundle args = new Bundle();
-        args.putString(URL_KEY,"http://it-sawade.de/api/gallery");
+        args.putString(URL_KEY,URL_GALLERYS);
         c.getSupportLoaderManager().restartLoader(STRING_LOADER, args, this);
 
         return viewGallerysFragment;

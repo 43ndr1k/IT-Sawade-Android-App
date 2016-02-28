@@ -5,16 +5,19 @@ import android.util.Log;
 import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
+import com.squareup.okhttp.ResponseBody;
 
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
+import de.itsawade.itsawade.App;
 import de.itsawade.itsawade.model.BlogPostList;
 import de.itsawade.itsawade.model.Images;
 import de.itsawade.itsawade.model.NewBlogPost;
 import de.itsawade.itsawade.model.UserList;
 import de.itsawade.itsawade.net.PlaceholderService;
+import de.itsawade.itsawade.util.UserData;
 import retrofit.GsonConverterFactory;
 import retrofit.Response;
 import retrofit.Retrofit;
@@ -26,14 +29,23 @@ public class PlaceholderLogic {
 
     private static final String TAG = "PlacehodlerLogic";
     private static PlaceholderLogic instance;
-    private String authToken = "test";
+    private static String authToken;
 
+    private String localhost= "http://192.168.42.90:8000";
+    private String web = "http://it-sawade.de";
     public static PlaceholderLogic getInstance() {
         if(instance == null) {
+            getToken();
             instance = new PlaceholderLogic();
+
         }
 
         return instance;
+    }
+
+    private static void getToken() {
+        UserData data = new UserData(App.getContext());
+        authToken = data.getAccessToken();
     }
 
     private PlaceholderService service;
@@ -44,7 +56,7 @@ public class PlaceholderLogic {
 
         Retrofit.Builder builder =
                 new Retrofit.Builder()
-                        .baseUrl("http://it-sawade.de")
+                        .baseUrl(web)
                         .addConverterFactory(GsonConverterFactory.create());
 
         OkHttpClient httpClient = new OkHttpClient();
@@ -127,21 +139,21 @@ public class PlaceholderLogic {
         return new UserList();
     }
 
-    public String createNewBlogPost(NewBlogPost post) {
+    public Integer createNewBlogPost(NewBlogPost post) {
 
+        int ok = 400;
         try {
-            Response<String> response = service.postBlogPost(post).execute();
+            Response<ResponseBody> response = service.postBlogPost(post).execute();
             if (response.isSuccess()) {
-                return response.body();
-            } else {
-                return "500";
+                ok = 200;
+                return ok;
             }
-
         } catch (IOException e) {
             Log.e(TAG,e.getMessage(),e);
         }
-
-        return null;
+        return ok;
     }
+
+
 
 }
