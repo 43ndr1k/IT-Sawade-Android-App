@@ -32,7 +32,7 @@ public class PlaceholderLogic {
     private static String authToken;
 
     private String localhost= "http://192.168.42.90:8000";
-    private String web = "http://it-sawade.de";
+    private String web = "https://it-sawade.de";
     public static PlaceholderLogic getInstance() {
         if(instance == null) {
             getToken();

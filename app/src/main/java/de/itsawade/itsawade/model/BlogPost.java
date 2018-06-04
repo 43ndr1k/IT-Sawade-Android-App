@@ -251,7 +251,7 @@ public class BlogPost implements Parcelable{
     }
 
     public String getFeatured_image() {
-        return "http://it-sawade.de/static/media/" + featured_image;
+        return "https://it-sawade.de/static/media/" + featured_image;
     }
 
     public void setFeatured_image(String featured_image) {
@@ -301,7 +301,7 @@ public class BlogPost implements Parcelable{
     public void setContentText(String text) {
 
         Document document= Jsoup.parse(text);
-        String baseUri = "http://it-sawade.de";
+        String baseUri = "https://it-sawade.de";
         Elements links = document.select("img");
         for (Element link : links)  {
             if (!link.attr("src").toLowerCase().startsWith("http://"))    {

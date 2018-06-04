@@ -65,7 +65,7 @@ public class LoginFragment extends Fragment implements LoaderManager.LoaderCallb
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startLoader();
+                saveSettings();
                 backToBackStack();
             }
         });
@@ -83,26 +83,34 @@ public class LoginFragment extends Fragment implements LoaderManager.LoaderCallb
         c.getSupportLoaderManager().restartLoader(USER_LIST_DOWNLOADER, null, this);
     }
 
+    private void saveSettings() {
+        SharedPreferences settings = c.getSharedPreferences(PREFS_NAME, c.MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString(SHPREF_KEY_ACCESS_TOKEN, authAcessToken.getText().toString());
+        editor.putString(LOGIN_USER, username.getText().toString());
+        editor.commit();
+        startLoader();
+    }
+
     public void save(UserList list) {
 
 
         String user = username.getText().toString();
 
-        for(int i = 0; i < list.getResults().size(); i++) {
-            String u = list.getResults().get(i).getUsername();
-            if ( user.equals(u)) {
 
-                UserVorhanden = true;
-                SharedPreferences settings = c.getSharedPreferences(PREFS_NAME, c.MODE_PRIVATE);
-                SharedPreferences.Editor editor = settings.edit();
-                editor.putString(SHPREF_KEY_ACCESS_TOKEN, authAcessToken.getText().toString());
-                editor.putString(LOGIN_USER, username.getText().toString());
-                editor.commit();
-                Toast.makeText(c, "Settings Saved", Toast.LENGTH_SHORT).show();
+        if (list.getResults() != null) {
+            for (int i = 0; i < list.getResults().size(); i++) {
+                String u = list.getResults().get(i).getUsername();
+                if (user.equals(u)) {
+
+                    UserVorhanden = true;
+                    saveSettings();
+                    Toast.makeText(c, "Settings Saved", Toast.LENGTH_SHORT).show();
+                }
             }
         }
         if (UserVorhanden == false) {
-            Toast.makeText(getContext(), "Username falsch", Toast.LENGTH_SHORT).show();
+            Toast.makeText(c.getApplication(), "Username falsch", Toast.LENGTH_SHORT).show();
         }
 
     }
